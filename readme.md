@@ -27,33 +27,32 @@
 
 ## 工作情况
 
-| *项目*         | *工作与否* | *备注*                                                       |
-| -------------- | ---------- | ------------------------------------------------------------ |
-| CPU变频        | √          | 14档, i7-6700HQ, 0x191b0000，显卡HD530                       |
-| SMBios         | √          | MBP13,3                                                      |
-| 🔊声卡          | √          | ALC-293, alcid=28                                            |
-| 显卡           | √          | Intel HD530 @1080p                                           |
-| HDMI           | √          | 与亮度调节和睡眠唤醒互斥。若需要外接屏幕，最好将睡眠关闭，开启hidpi外接显示器确实很爽^_^ |
-| miniDP         | √          |                                                              |
-| 有线网卡       | √          |                                                              |
-| WiFi           | √          | Inter无线网卡，AirportItlwm.kext驱动                         |
-| 蓝牙           | √          |                                                              |
-| 📹摄像头        | √          |                                                              |
-| USB-3.0        | √          | 速度： 最大 5 Gb/秒                                          |
-| 🔋电池          | √          |                                                              |
-| ~~亮度快捷键~~ | ~~√~~      | ~~F5,F6(Fn)，必须启用SSDT-DGPU.aml，与HDMI互斥~~             |
-| 声音快捷键     | √          | F2,F3                                                        |
-| 触摸板         | √          | 三指手势                                                     |
-| HIDPI          | √          | 1920*1080，开启1440x810的hidpi分辨率即可，高了在睡眠唤醒时会花屏，后面有解决方案。 |
-| 睡眠💤唤醒      | √          | 🔌电源键，必须开启独显屏蔽才能使用，这样与HDMI外接屏幕互斥    |
-| 盒盖睡眠💤唤醒  | √          |                                                              |
-|                |            |                                                              |
+| *项目*        | *工作与否* | *备注*                                                       |
+| ------------- | ---------- | ------------------------------------------------------------ |
+| CPU变频       | √          | 14档, i7-6700HQ, 0x191b0000，显卡HD530                       |
+| SMBios        | √          | MBP13,3                                                      |
+| 🔊声卡         | √          | ALC-293, alcid=28                                            |
+| 显卡          | √          | Intel HD530 @1080p                                           |
+| HDMI          | √          | 屏蔽独显后无法使用，不屏蔽独显睡眠又无法唤醒，***目前暂无解决办法*** |
+| miniDP        | √          | 屏蔽独显后无法使用，不屏蔽独显睡眠又无法唤醒，***目前暂无解决办法*** |
+| 有线网卡      | √          |                                                              |
+| WiFi          | √          | Inter无线网卡，AirportItlwm.kext驱动                         |
+| 蓝牙          | √          | ***Inter蓝牙驱动，暂未配置***                                |
+| 📹摄像头       | √          |                                                              |
+| USB-3.0       | √          | 速度： 最大 5 Gb/秒                                          |
+| 🔋电池         | √          |                                                              |
+| 亮度快捷键    | √          | F5,F6(Fn)，采用[OC-little](https://github.com/daliansky/OC-little)的亮度补丁，注意改名问题 |
+| 声音快捷键    | √          | F2,F3                                                        |
+| Fn其余快捷键  | √          | 采用[YogaSMC]([zhen-zen/YogaSMC: ACPI driver for OEM hardware. (github.com)](https://github.com/zhen-zen/YogaSMC))补丁<br />使用方法：[关于YogaSMC 的使用](https://github.com/daliansky/XiaoXinPro-13-hackintosh/issues/139) |
+| 触摸板        | √          |                                                              |
+| HIDPI         | √          | 1920*1080，开启超过900的hidpi会花屏，采用缓冲帧补丁解决。 <br />https://bbs.pcbeta.com/viewthread-1832969-1-1.html |
+| 睡眠💤唤醒     | √          | 🔌电源键，睡眠快捷键：Fn + 4                                  |
+| 盒盖睡眠💤唤醒 | √          |                                                              |
 
 ## 存在问题
 
-* fn快捷键除了音量调节，其余暂不可用。 后续尝试方案：ThinkPad助手
 * 指纹不可用。
-* 睡眠唤醒只能电源键，没有快捷键。   后续尝试方案：ACPI补丁映射
+* 睡眠唤醒只能电源键，没有快捷键
 * 随航Sidecar暂不可用
 * 扩展坞未尝试过，有需要的可以自行测验
 
@@ -80,9 +79,9 @@
 
 ## 问题解决
 
-  1. Inter无线网卡联网：下载AirportItlwm.kext驱动，拷贝到Kexts文件夹，添加进OC
+  1. **Inter无线网卡联网**：下载AirportItlwm.kext驱动，拷贝到Kexts文件夹，添加进OC
 
-  2. 睡眠无法唤醒（实际唤醒了，但不能亮屏）：屏蔽独显，两种方法：[OC-little](https://github.com/daliansky/OC-little)，下面介绍配置法
+  2. **睡眠无法唤醒（实际唤醒了，但不能亮屏）**：屏蔽独显，两种方法：[OC-little](https://github.com/daliansky/OC-little)，下面介绍配置法
 
         ①：OC引导用OC Configuration打开（Windows可用OCAT）
 
@@ -104,9 +103,44 @@
 
 
 
-3. 睡眠唤醒后1/4屏、花屏问题：开启分辨率较高的hidpi后（一般是超过900），睡眠会出现1/4屏问题，再睡眠一次会出现雪花花屏问题。 
+3. **睡眠唤醒后1/4屏、花屏问题**：开启分辨率较高的hidpi后（一般是超过900），睡眠会出现1/4屏问题，再睡眠一次会出现雪花花屏问题。 
 
    ​      ①：将hidpi开启到1440*810，这算是1080P屏幕比较好的状态
 
-   ​      ②：[关于笔记本开启hidpi后，睡眠唤醒半屏、雪花点闪屏的解决办法](https://bbs.pcbeta.com/viewthread-1832969-1-1.html)
+   ​      ②：[关于笔记本开启hidpi后，睡眠唤醒半屏、雪花点闪屏的解决办法 ](https://bbs.pcbeta.com/viewthread-1832969-1-1.html)，这种办法能开启1080P
+   
+   
+
+4. **亮度补丁**
+
+   补丁：https://github.com/daliansky/OC-little， 05/05-2
+   操作：https://bbs.pcbeta.com/viewthread-1840044-1-1.html
+
+
+
+5. **Fn快捷键**
+
+​		ThinkPad解决方法：YogaSMC补丁，使用方法：https://github.com/daliansky/XiaoXinPro-13-hackintosh/issues/139
+
+- 注：ThinkPad用ThinkPad那个补丁，实现功能：
+- Fn功能键开启与关闭 ( 键盘上第一行的功能键几乎能工作 )。
+- 键盘灯启动与关闭
+- 性能模式切换
+- CapsLk 锁
+
+
+
+其他解决办法（SSDT，键盘映射补丁修补）
+
+​        原理：https://www.mfpud.com/topics/1070/ 转载自 https://blog.skk.moe/categories/%E9%BB%91%E8%8B%B9%E6%9E%9C/
+
+​        操作：ThinkPad全线键盘的fn快捷键是通用的，因此找一个其他版本的ThinkPad做好的SSDT-KBD.asl文件修补即可。 
+
+​        同时在系统偏好设置中设置对应功能的快捷键（不设置对应功能的快捷键，fn可用，但无法操作系统）
+
+
+
+6. 屏蔽独显后无法外接显示器
+
+   暂时还未实践，解决方法：https://www.it610.com/article/1279831208980660224.htm
 
