@@ -34,14 +34,6 @@
 				<key>Comment</key>
 				<string></string>
 				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>SSDT-PNLF.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string></string>
-				<key>Enabled</key>
 				<false/>
 				<key>Path</key>
 				<string>SSDT-DGPU.aml</string>
@@ -69,6 +61,38 @@
 				<true/>
 				<key>Path</key>
 				<string>SSDT-EC-USBX-LAPTOP.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>RehabMan 亮度补丁，显示亮度调节，与定制补丁二选一，本机显卡就叫IGPU（用Hackintool查看PCI得出）不用改名</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-PNLF.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>定制补丁：显示亮度调节，与RehabMan二选一</string>
+				<key>Enabled</key>
+				<false/>
+				<key>Path</key>
+				<string>SSDT-PNLF-SKL_KBL.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>YogaSMC补丁：实现Windows版本联想管家的部分功能，包括fn功能键</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-ECRW.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>YogaSMC补丁：实现Windows版本联想管家的部分功能。Thinkpad</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-THINK.aml</string>
 			</dict>
 		</array>
 		<key>Delete</key>
@@ -636,6 +660,8 @@
 				<data>AAgAAA==</data>
 				<key>framebuffer-fbmem</key>
 				<data>AACQAA==</data>
+				<key>framebuffer-flags</key>
+				<data>DxEgAA==</data>
 				<key>framebuffer-patch-enable</key>
 				<data>AQAAAA==</data>
 				<key>framebuffer-stolenmem</key>
@@ -1114,6 +1140,42 @@
 				<true/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/AirportItlwm</string>
+				<key>MaxKernel</key>
+				<string></string>
+				<key>MinKernel</key>
+				<string></string>
+				<key>PlistPath</key>
+				<string>Contents/Info.plist</string>
+			</dict>
+			<dict>
+				<key>Arch</key>
+				<string>Any</string>
+				<key>BundlePath</key>
+				<string>ECEnabler.kext</string>
+				<key>Comment</key>
+				<string></string>
+				<key>Enabled</key>
+				<true/>
+				<key>ExecutablePath</key>
+				<string>Contents/MacOS/ECEnabler</string>
+				<key>MaxKernel</key>
+				<string></string>
+				<key>MinKernel</key>
+				<string></string>
+				<key>PlistPath</key>
+				<string>Contents/Info.plist</string>
+			</dict>
+			<dict>
+				<key>Arch</key>
+				<string>Any</string>
+				<key>BundlePath</key>
+				<string>YogaSMC.kext</string>
+				<key>Comment</key>
+				<string></string>
+				<key>Enabled</key>
+				<true/>
+				<key>ExecutablePath</key>
+				<string>Contents/MacOS/YogaSMC</string>
 				<key>MaxKernel</key>
 				<string></string>
 				<key>MinKernel</key>
