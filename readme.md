@@ -1,6 +1,6 @@
 # T460P OpenCore BigSur 11.6
 
-* 基于[T460p-OpenCore](https://github.com/Danny-Z/T460p-OpenCore)安装，版本为macos bigsur 11.6，自用
+* 基于[T460p-OpenCore](https://github.com/Danny-Z/T460p-OpenCore)安装，版本为macos bigsur 11.6，自用，几乎完美。（指纹，随航，HDMI外接显示器不可用）
 
 ## 相关资料		
 
@@ -37,7 +37,7 @@
 | miniDP        | √          | 屏蔽独显后无法使用，不屏蔽独显睡眠又无法唤醒，***目前暂无解决办法*** |
 | 有线网卡      | √          |                                                              |
 | WiFi          | √          | Inter无线网卡，AirportItlwm.kext驱动                         |
-| 蓝牙          | √          | ***Inter蓝牙驱动，暂未配置***                                |
+| 蓝牙          | √          | Inter蓝牙驱动，IntelBluetoothFirmware.kext、IntelBluetoothInjector.kext、IntelBTPatcher.kext |
 | 📹摄像头       | √          |                                                              |
 | USB-3.0       | √          | 速度： 最大 5 Gb/秒                                          |
 | 🔋电池         | √          |                                                              |
@@ -46,15 +46,20 @@
 | Fn其余快捷键  | √          | 采用[YogaSMC]([zhen-zen/YogaSMC: ACPI driver for OEM hardware. (github.com)](https://github.com/zhen-zen/YogaSMC))补丁<br />使用方法：[关于YogaSMC 的使用](https://github.com/daliansky/XiaoXinPro-13-hackintosh/issues/139) |
 | 触摸板        | √          |                                                              |
 | HIDPI         | √          | 1920*1080，开启超过900的hidpi会花屏，采用缓冲帧补丁解决。 <br />https://bbs.pcbeta.com/viewthread-1832969-1-1.html |
-| 睡眠💤唤醒     | √          | 🔌电源键，睡眠快捷键：Fn + 4                                  |
+| 睡眠💤唤醒     | √          | 🔌电源键，睡眠快捷键：Fn + 4，启用停用睡眠                    |
 | 盒盖睡眠💤唤醒 | √          |                                                              |
+
+
+
+
 
 ## 存在问题
 
 * 指纹不可用。
-* 睡眠唤醒只能电源键，没有快捷键
+* ~~睡眠唤醒只能电源键，没有快捷键~~，Fn + 4
 * 随航Sidecar暂不可用
 * 扩展坞未尝试过，有需要的可以自行测验
+* 屏蔽独显与外接HDMI无法共存，不屏蔽独显睡眠又无法唤醒，暂时无法解决。
 
 
 
@@ -81,9 +86,11 @@
 
   1. **Inter无线网卡联网**：下载AirportItlwm.kext驱动，拷贝到Kexts文件夹，添加进OC
 
-  2. **睡眠无法唤醒（实际唤醒了，但不能亮屏）**：屏蔽独显，两种方法：[OC-little](https://github.com/daliansky/OC-little)，下面介绍配置法
+  2. **蓝牙补丁**：IntelBluetoothFirmware.kext、IntelBluetoothInjector.kext、IntelBTPatcher.kext
 
-        ①：OC引导用OC Configuration打开（Windows可用OCAT）
+  3. **睡眠无法唤醒（实际唤醒了，但不能亮屏）**：屏蔽独显，两种方法：[OC-little](https://github.com/daliansky/OC-little)，下面介绍配置法
+
+     ①：OC引导用OC Configuration打开（Windows可用OCAT）
 
      - `DeviceProperties\Add\PciRoot(0x0)/Pci(0x2,0x0)` 添加
 
@@ -103,22 +110,22 @@
 
 
 
-3. **睡眠唤醒后1/4屏、花屏问题**：开启分辨率较高的hidpi后（一般是超过900），睡眠会出现1/4屏问题，再睡眠一次会出现雪花花屏问题。 
+4. **睡眠唤醒后1/4屏、花屏问题**：开启分辨率较高的hidpi后（一般是超过900），睡眠会出现1/4屏问题，再睡眠一次会出现雪花花屏问题。 
 
-   ​      ①：将hidpi开启到1440*810，这算是1080P屏幕比较好的状态
+​      ①：将hidpi开启到1440*810，这算是1080P屏幕比较好的状态
 
-   ​      ②：[关于笔记本开启hidpi后，睡眠唤醒半屏、雪花点闪屏的解决办法 ](https://bbs.pcbeta.com/viewthread-1832969-1-1.html)，这种办法能开启1080P
-   
-   
-
-4. **亮度补丁**
-
-   补丁：https://github.com/daliansky/OC-little， 05/05-2
-   操作：https://bbs.pcbeta.com/viewthread-1840044-1-1.html
+​      ②：[关于笔记本开启hidpi后，睡眠唤醒半屏、雪花点闪屏的解决办法 ](https://bbs.pcbeta.com/viewthread-1832969-1-1.html)，这种办法能开启1080P
 
 
 
-5. **Fn快捷键**
+5. **亮度补丁**
+
+​		补丁：https://github.com/daliansky/OC-little， 05/05-2
+​		操作：https://bbs.pcbeta.com/viewthread-1840044-1-1.html
+
+
+
+6. **Fn快捷键**
 
 ​		ThinkPad解决方法：YogaSMC补丁，使用方法：https://github.com/daliansky/XiaoXinPro-13-hackintosh/issues/139
 
@@ -140,7 +147,7 @@
 
 
 
-6. 屏蔽独显后无法外接显示器
+7. **屏蔽独显后无法外接显示器**
 
-   暂时还未实践，解决方法：https://www.it610.com/article/1279831208980660224.htm
+暂时还未实践，解决方法：https://www.it610.com/article/1279831208980660224.htm
 
